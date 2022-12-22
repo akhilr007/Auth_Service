@@ -38,10 +38,11 @@ module.exports = (sequelize, DataTypes) => {
     modelName: 'User',
   });
 
+  // hooks - trigger before user creation
   User.beforeCreate((user) => {
     const encryptedPassword = bcrypt.hashSync(user.password, SALT);
     user.password = encryptedPassword;
   });
-  
+
   return User;
 };
