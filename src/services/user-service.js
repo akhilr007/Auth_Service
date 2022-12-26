@@ -60,7 +60,7 @@ class UserService {
         }
     }
 
-        createToken(user){
+    createToken(user){
         try {
             const result = jwt.sign(user, JWT_KEY, {expiresIn: "1h"});
             return result;
@@ -70,7 +70,7 @@ class UserService {
         }
     }
 
-        verifyToken(token){
+    verifyToken(token){
         try {
             const response = jwt.verify(token, JWT_KEY);
             return response;
@@ -80,11 +80,21 @@ class UserService {
         }
     }
 
-        checkPassword(userInputPlainPassword, encryptedPassword){
+    checkPassword(userInputPlainPassword, encryptedPassword){
         try {
             return bcrypt.compareSync(userInputPlainPassword, encryptedPassword);
         } catch (error) {
             console.log("something went wrong in password verification");
+            throw { error };
+        }
+    }
+
+    isAdmin(userId){
+        try {
+            const response = this.userRepository.isAdmin(userId);
+            return response;
+        } catch (error) {
+            console.log("something went wrong in admin verification");
             throw { error };
         }
     }
