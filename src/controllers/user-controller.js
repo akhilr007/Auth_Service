@@ -15,13 +15,12 @@ const create = async (req, res) => {
             err: {}
         });
     } catch (error) {
-        console.log(error);
-        return res.status(500).json({
+        return res.status(error.statusCode).json({
             data: {},
             success: false,
-            message: "failed to create a user",
-            err: error 
-        })
+            message: error.message,
+            err: error.explanation
+        });
     }
 }
 
